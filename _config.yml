@@ -3,5 +3,5 @@ language: zh-CN
 theme: fluid
 deploy:
   type: git
-  repo: https://github.com/Almighty-King/Almighty-King.github.io.git
+  repo: git@github.com:Almighty-King/Almighty-King.github.io.git
   branch: main
