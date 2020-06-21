@@ -53,6 +53,9 @@ importers:
       hexo-util:
         specifier: ^3.3.0
         version: 3.3.0
+      highlightjs:
+        specifier: ^9.16.2
+        version: 9.16.2
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -489,6 +492,10 @@ packages:
   highlight.js@11.10.0:
     resolution: {integrity: sha512-SYVnVFswQER+zu1laSya563s+F8VDGt7o35d4utbamowvUNLLMovFqwCLSocpZTz3MgaSRA1IbqRWZv97dtErQ==}
     engines: {node: '>=12.0.0'}
+
+  highlightjs@9.16.2:
+    resolution: {integrity: sha512-FK1vmMj8BbEipEy8DLIvp71t5UsC7n2D6En/UfM/91PCwmOpj6f2iu0Y0coRC62KSRHHC+dquM2xMULV/X7NFg==}
+    deprecated: Use the 'highlight.js' package instead https://npm.im/highlight.js
 
   html-encoding-sniffer@3.0.0:
     resolution: {integrity: sha512-oWv4T4yJ52iKrufjnyZPkrN0CH3QnrUqdB6In1g5Fe1mia8GmF36gnfNySxoZtxD5+NmYw1EElVXiBk93UeskA==}
@@ -1440,6 +1447,8 @@ snapshots:
       - chokidar
 
   highlight.js@11.10.0: {}
+
+  highlightjs@9.16.2: {}
 
   html-encoding-sniffer@3.0.0:
     dependencies:

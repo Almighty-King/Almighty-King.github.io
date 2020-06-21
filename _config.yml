@@ -1,6 +1,8 @@
 title: FreeStyle
 language: zh-CN
 theme: fluid
+author: Zhihui
+url: https://almighty-king.github.io
 deploy:
   type: git
   repo: git@github.com:Almighty-King/Almighty-King.github.io.git
