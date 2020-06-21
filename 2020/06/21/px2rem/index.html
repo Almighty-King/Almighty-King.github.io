@@ -19,21 +19,21 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="写点东西，记录下工作和生活，就当是备忘录吧。">
+    <meta name="description" content="rem 转 px 的 Webpack 插件 在h5开发中，我们做设备兼容经常会用到 rem，通常会有个问题就是 rem 和设计稿 px 之间的转换。正好为了学习一下 Webpack 插件的开发，所以就尝试了下简单写个 Webpack 插件来完成这个转换。  实现逻辑 遍历项目中的 css 文件 正则匹配所有的 px 单位，然后根据传入的换算比例计算为对应的 rem。  代码123456789101">
 <meta property="og:type" content="article">
-<meta property="og:title" content="随便记点啥吧">
-<meta property="og:url" content="http://example.com/2020/06/19/2020-06-19/index.html">
+<meta property="og:title" content="FreeStyle">
+<meta property="og:url" content="http://example.com/2020/06/21/px2rem/index.html">
 <meta property="og:site_name" content="FreeStyle">
-<meta property="og:description" content="写点东西，记录下工作和生活，就当是备忘录吧。">
+<meta property="og:description" content="rem 转 px 的 Webpack 插件 在h5开发中，我们做设备兼容经常会用到 rem，通常会有个问题就是 rem 和设计稿 px 之间的转换。正好为了学习一下 Webpack 插件的开发，所以就尝试了下简单写个 Webpack 插件来完成这个转换。  实现逻辑 遍历项目中的 css 文件 正则匹配所有的 px 单位，然后根据传入的换算比例计算为对应的 rem。  代码123456789101">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-06-19T05:34:30.723Z">
-<meta property="article:modified_time" content="2020-06-19T05:34:30.723Z">
+<meta property="article:published_time" content="2020-06-21T14:03:24.446Z">
+<meta property="article:modified_time" content="2020-06-21T14:08:53.605Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>随便记点啥吧 - FreeStyle</title>
+  <title>FreeStyle</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="随便记点啥吧"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2020-06-19 13:34" pubdate>
-          2020年6月19日 下午
+        <time datetime="2020-06-21 22:03" pubdate>
+          2020年6月21日 晚上
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          19 字
+          292 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          1 分钟
+          3 分钟
         
       </span>
     
@@ -270,14 +270,20 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">随便记点啥吧</h1>
+            <h1 id="seo-header"></h1>
             
             
               <div class="markdown-body">
                 
-                <blockquote>
-<p>写点东西，记录下工作和生活，就当是备忘录吧。</p>
+                <h1 id="rem-转-px-的-Webpack-插件"><a href="#rem-转-px-的-Webpack-插件" class="headerlink" title="rem 转 px 的 Webpack 插件"></a>rem 转 px 的 Webpack 插件</h1><blockquote>
+<p>在h5开发中，我们做设备兼容经常会用到 rem，通常会有个问题就是 rem 和设计稿 px 之间的转换。正好为了学习一下 Webpack 插件的开发，所以就尝试了下简单写个 Webpack 插件来完成这个转换。</p>
 </blockquote>
+<h1 id="实现逻辑"><a href="#实现逻辑" class="headerlink" title="实现逻辑"></a>实现逻辑</h1><blockquote>
+<p>遍历项目中的 css 文件 正则匹配所有的 px 单位，然后根据传入的换算比例计算为对应的 rem。</p>
+</blockquote>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Px2RemPlugin</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">options</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">options</span> = options;<br>  &#125;<br><br>  <span class="hljs-title function_">apply</span>(<span class="hljs-params">compiler</span>) &#123;<br>    <span class="hljs-comment">// 在 emit 阶段进行处理，emit 是文件生成资源到 output 目录之前执行的钩子，也是能修改资源的最后时机</span><br>    compiler.<span class="hljs-property">hooks</span>.<span class="hljs-property">emit</span>.<span class="hljs-title function_">tapAsync</span>(<span class="hljs-string">&#x27;Px2RemPlugin&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">compilation, callback</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">const</span> &#123; remUnit &#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">options</span>; <span class="hljs-comment">// rem 单位</span><br>      <span class="hljs-keyword">const</span> &#123; assets &#125; = compilation;<br>      <span class="hljs-comment">// 遍历所有资源文件</span><br>      <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(assets).<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">[filename, source]</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">if</span> (filename.<span class="hljs-title function_">endsWith</span>(<span class="hljs-string">&#x27;.css&#x27;</span>)) &#123;<br>          <span class="hljs-keyword">const</span> content = source.<span class="hljs-title function_">source</span>();<br>          <span class="hljs-keyword">const</span> newContent = content.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/(\d+)px/g</span>, <span class="hljs-function">(<span class="hljs-params">match, p1</span>) =&gt;</span> &#123;<br>            <span class="hljs-keyword">const</span> pxValue = <span class="hljs-built_in">parseInt</span>(p1, <span class="hljs-number">10</span>);<br>            <span class="hljs-keyword">const</span> remValue = pxValue / remUnit;<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;remValue&#125;</span>rem`</span>;<br>          &#125;);<br>          <span class="hljs-comment">// 将修改后的内容替换回资源文件</span><br>          compilation.<span class="hljs-property">assets</span>[filename] = &#123;<br>            <span class="hljs-attr">source</span>: <span class="hljs-function">() =&gt;</span> newContent,<br>            <span class="hljs-attr">size</span>: <span class="hljs-function">() =&gt;</span> newContent.<span class="hljs-property">length</span>,<br>          &#125;;<br>        &#125;<br>      &#125;);<br>      <span class="hljs-title function_">callback</span>();<br>    &#125;);<br>  &#125;<br>&#125;<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-title class_">Px2RemPlugin</span>;<br></code></pre></td></tr></table></figure>
+
+<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-comment">// ... 其他配置</span><br>  <span class="hljs-attr">plugins</span>: [<span class="hljs-keyword">new</span> <span class="hljs-title class_">Px2RemPlugin</span>(&#123; <span class="hljs-attr">remUnit</span>: <span class="hljs-number">75</span> &#125;)],<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -295,8 +301,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>随便记点啥吧</div>
-      <div>http://example.com/2020/06/19/2020-06-19/</div>
+      <div></div>
+      <div>http://example.com/2020/06/21/px2rem/</div>
     </div>
     <div class="license-meta">
       
@@ -308,7 +314,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2020年6月19日</div>
+          <div>2020年6月21日</div>
         </div>
       
       
@@ -340,15 +346,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/06/21/px2rem/" title="">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2020/06/19/2020-06-19/" title="随便记点啥吧">
+                        <span class="hidden-mobile">随便记点啥吧</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
