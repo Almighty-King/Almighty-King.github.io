@@ -1,0 +1,699 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Zhihui">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Phaser.js 是一个开源的 HTML5 游戏框架，专为开发 2D 游戏设计，支持缓动动画和物理引擎，本文是基于 Phaser3 进行开发， 今天咱们写一个小 demo 来了解一下 Phaser 的开发流程  1.安装 两种方式 直接引用 cdn 或者 yarn 安装  使用 cdn1&lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;phas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Phaser 学习笔记">
+<meta property="og:url" content="https://almighty-king.github.io/2020/08/16/Phaser/index.html">
+<meta property="og:site_name" content="FreeStyle">
+<meta property="og:description" content="Phaser.js 是一个开源的 HTML5 游戏框架，专为开发 2D 游戏设计，支持缓动动画和物理引擎，本文是基于 Phaser3 进行开发， 今天咱们写一个小 demo 来了解一下 Phaser 的开发流程  1.安装 两种方式 直接引用 cdn 或者 yarn 安装  使用 cdn1&lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;phas">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-16T14:07:05.137Z">
+<meta property="article:modified_time" content="2020-08-16T14:13:21.751Z">
+<meta property="article:author" content="Zhihui">
+<meta property="article:tag" content="Phaser">
+<meta property="article:tag" content="游戏">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Phaser 学习笔记 - FreeStyle</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"almighty-king.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"typescript"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>FreeStyle</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Phaser 学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-16 22:07" pubdate>
+          2020年8月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          945 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Phaser 学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>Phaser.js 是一个开源的 HTML5 游戏框架，专为开发 2D 游戏设计，支持缓动动画和物理引擎，本文是基于 Phaser3 进行开发， 今天咱们写一个小 demo 来了解一下 Phaser 的开发流程</p>
+</blockquote>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h2><p> 两种方式 直接引用 cdn 或者 yarn 安装</p>
+<ul>
+<li>使用 cdn<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li>使用 yarn<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yarn add phaser<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="2-创建一个游戏实例，为了方便就直接在-html-中引用了"><a href="#2-创建一个游戏实例，为了方便就直接在-html-中引用了" class="headerlink" title="2.创建一个游戏实例，为了方便就直接在 html 中引用了"></a>2.创建一个游戏实例，为了方便就直接在 html 中引用了</h2><blockquote>
+<p>这部分代码就是加载了一个 phaser 的 logo 图片， 然后把它添加到画布中</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Phaser Demo<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> config = &#123;</span><br><span class="language-javascript">            <span class="hljs-attr">type</span>: <span class="hljs-title class_">Phaser</span>.<span class="hljs-property">AUTO</span>, <span class="hljs-comment">// 渲染器类型 有三种 分别是 canvas 和 webgl 和 auto 自动选择</span></span><br><span class="language-javascript">            <span class="hljs-attr">width</span>: <span class="hljs-number">800</span>,</span><br><span class="language-javascript">            <span class="hljs-attr">height</span>: <span class="hljs-number">600</span>,</span><br><span class="language-javascript">            <span class="hljs-attr">scene</span>: &#123;</span><br><span class="language-javascript">                <span class="hljs-attr">preload</span>: preload,</span><br><span class="language-javascript">                <span class="hljs-attr">create</span>: create</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">        &#125;;</span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-comment">// 创建游戏实例</span></span><br><span class="language-javascript">        <span class="hljs-keyword">const</span> game = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Phaser</span>.<span class="hljs-title class_">Game</span>(config);</span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-comment">// 预加载 在 phaser 中为了更好的管理资源， 我们一般会把资源放在 preload 函数中进行加载</span></span><br><span class="language-javascript">        <span class="hljs-keyword">function</span> <span class="hljs-title function_">preload</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-variable language_">this</span>.<span class="hljs-property">load</span>.<span class="hljs-title function_">setBaseURL</span>(<span class="hljs-string">&#x27;https://labs.phaser.io/assets/&#x27;</span>);</span><br><span class="language-javascript">            <span class="hljs-variable language_">this</span>.<span class="hljs-property">load</span>.<span class="hljs-title function_">image</span>(<span class="hljs-string">&#x27;logo&#x27;</span>, <span class="hljs-string">&#x27;sprites/phaser3-logo.png&#x27;</span>);</span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript">        <span class="hljs-keyword">function</span> <span class="hljs-title function_">create</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-variable language_">this</span>.<span class="hljs-property">add</span>.<span class="hljs-title function_">image</span>(<span class="hljs-number">400</span>, <span class="hljs-number">300</span>, <span class="hljs-string">&#x27;logo&#x27;</span>);</span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这样就创建一个基本的场景，并且加载了一个图片资源</p>
+<h2 id="3-关于-Phaser-中的资源"><a href="#3-关于-Phaser-中的资源" class="headerlink" title="3. 关于 Phaser 中的资源"></a>3. 关于 Phaser 中的资源</h2><blockquote>
+<p>在 phaser 中， 资源是游戏的基本组成部分， 包括图片、音频、视频等，这些资源都是通过 Phaser 的资源管理器进行加载的</p>
+</blockquote>
+<ul>
+<li>加载资源</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 加载音频</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">load</span>.<span class="hljs-title function_">audio</span>(<span class="hljs-string">&#x27;background-music&#x27;</span>, <span class="hljs-string">&#x27;audio/background-music.mp3&#x27;</span>);<br><br><span class="hljs-comment">// 加载视频</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">load</span>.<span class="hljs-title function_">video</span>(<span class="hljs-string">&#x27;intro-video&#x27;</span>, <span class="hljs-string">&#x27;video/intro-video.mp4&#x27;</span>);<br><br><span class="hljs-comment">// 加载纹理</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">load</span>.<span class="hljs-title function_">texture</span>(<span class="hljs-string">&#x27;texture&#x27;</span>, <span class="hljs-string">&#x27;sprites/texture.png&#x27;</span>);<br><br><span class="hljs-comment">// 加载字体</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">load</span>.<span class="hljs-title function_">font</span>(<span class="hljs-string">&#x27;font&#x27;</span>, <span class="hljs-string">&#x27;fonts/font.ttf&#x27;</span>);<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用资源</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 在 create 函数中使用资源</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">add</span>.<span class="hljs-title function_">image</span>(<span class="hljs-number">400</span>, <span class="hljs-number">300</span>, <span class="hljs-string">&#x27;logo&#x27;</span>);<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">add</span>.<span class="hljs-title function_">text</span>(<span class="hljs-number">400</span>, <span class="hljs-number">300</span>, <span class="hljs-string">&#x27;Hello Phaser&#x27;</span>, &#123; <span class="hljs-attr">font</span>: <span class="hljs-string">&#x27;16px&#x27;</span>, <span class="hljs-attr">fill</span>: <span class="hljs-string">&#x27;#000&#x27;</span> &#125;);<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">add</span>.<span class="hljs-title function_">sprite</span>(<span class="hljs-number">400</span>, <span class="hljs-number">300</span>, <span class="hljs-string">&#x27;texture&#x27;</span>);<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">add</span>.<span class="hljs-title function_">video</span>(<span class="hljs-number">400</span>, <span class="hljs-number">300</span>, <span class="hljs-string">&#x27;intro-video&#x27;</span>);<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">add</span>.<span class="hljs-title function_">audio</span>(<span class="hljs-string">&#x27;background-music&#x27;</span>);<br><br></code></pre></td></tr></table></figure>
+
+<p>这些add到场景中的的对象，我们称为游戏对象。 </p>
+<h2 id="4-游戏对象"><a href="#4-游戏对象" class="headerlink" title="4. 游戏对象"></a>4. 游戏对象</h2><blockquote>
+<p>游戏对象是游戏的基本组成部分， 我们的操作都是基于游戏对象来进行的。   </p>
+</blockquote>
+<p>常见的游戏对象包含以下几种类型：  </p>
+<ul>
+<li>精灵</li>
+<li>文本</li>
+<li>图形</li>
+<li>音频</li>
+<li>视频</li>
+<li>粒子</li>
+<li>物理对象</li>
+</ul>
+<p>以上就是常见的游戏对象类型， 当然还有其他一些不常见的类型， 比如瓦片地图、 瓦片精灵等。</p>
+<h2 id="5-物理引擎"><a href="#5-物理引擎" class="headerlink" title="5. 物理引擎"></a>5. 物理引擎</h2><blockquote>
+<p>物理引擎是游戏开发中非常重要的一部分， 物理引擎可以模拟现实世界中的物理现象， 比如重力、 碰撞、 摩擦力等。   </p>
+</blockquote>
+<p>Phaser 中内置了多种物理引擎， 比如 arcade 、 matter 、 cannon 等。</p>
+<p>物理引擎的引入也比较简单， 我们只需要在创建游戏实例的时候， 通过 physics 属性来指定我们使用的物理引擎即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> config = &#123;<br>    <span class="hljs-attr">type</span>: <span class="hljs-title class_">Phaser</span>.<span class="hljs-property">AUTO</span>,<br>    <span class="hljs-attr">width</span>: <span class="hljs-number">800</span>,<br>    <span class="hljs-attr">height</span>: <span class="hljs-number">600</span>,<br>    <span class="hljs-attr">physics</span>: &#123;<br>        <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;arcade&#x27;</span>,<br>        <span class="hljs-attr">arcade</span>: &#123;<br>            <span class="hljs-attr">gravity</span>: &#123; <span class="hljs-attr">y</span>: <span class="hljs-number">300</span> &#125;,<br>            <span class="hljs-attr">debug</span>: <span class="hljs-literal">false</span><br>        &#125;<br>    &#125;,<br>    <span class="hljs-attr">scene</span>: &#123;<br>        <span class="hljs-attr">preload</span>: preload,<br>        <span class="hljs-attr">create</span>: create<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-缓动动画"><a href="#6-缓动动画" class="headerlink" title="6. 缓动动画"></a>6. 缓动动画</h2><blockquote>
+<p>Phaser 内置了缓动动画， 我们可以通过 tween 方法来实现缓动动画。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">this</span>.<span class="hljs-property">tweens</span>.<span class="hljs-title function_">add</span>(&#123;<br>    <span class="hljs-attr">targets</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">logo</span>,<br>    <span class="hljs-attr">x</span>: <span class="hljs-number">600</span>,<br>    <span class="hljs-attr">y</span>: <span class="hljs-number">400</span>,<br>    <span class="hljs-attr">duration</span>: <span class="hljs-number">2000</span>,<br>    <span class="hljs-attr">ease</span>: <span class="hljs-string">&#x27;Power1.easeInOut&#x27;</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>通过上边代码， 我们可以实现一个 logo 图片在 2 秒内从当前位置移动到 (600, 400) 位置， 并且使用 Power1.easeInOut 缓动动画。</p>
+<p>以上就是对 Phaser 中一些概念的基本介绍。剩下的就是结合官网的 demo 和项目再进一步学习。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Phaser/" class="print-no-link">#Phaser</a>
+      
+        <a href="/tags/%E6%B8%B8%E6%88%8F/" class="print-no-link">#游戏</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Phaser 学习笔记</div>
+      <div>https://almighty-king.github.io/2020/08/16/Phaser/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Zhihui</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年8月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/06/21/px2rem/" title="Px2Rem Webpack 插件初试">
+                        <span class="hidden-mobile">Px2Rem Webpack 插件初试</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
